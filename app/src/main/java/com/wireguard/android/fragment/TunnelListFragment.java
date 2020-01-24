@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -39,7 +40,6 @@ import com.wireguard.android.databinding.TunnelListItemBinding;
 import com.wireguard.android.model.Tunnel;
 import com.wireguard.android.util.ErrorMessages;
 import com.wireguard.android.widget.MultiselectableRelativeLayout;
-import com.wireguard.android.widget.fab.FloatingActionsMenuRecyclerViewScrollListener;
 import com.wireguard.config.BadConfigException;
 import com.wireguard.config.Config;
 
@@ -74,7 +74,6 @@ public class TunnelListFragment extends BaseFragment {
 
     public boolean collapseActionMenu() {
         if (binding != null && binding.createMenu.isExpanded()) {
-            binding.createMenu.collapse();
             return true;
         }
         return false;
@@ -218,7 +217,7 @@ public class TunnelListFragment extends BaseFragment {
         }
     }
 
-    @SuppressWarnings("deprecation")
+    //@SuppressWarnings("deprecation")
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
@@ -228,11 +227,14 @@ public class TunnelListFragment extends BaseFragment {
 
         binding.tunnelList.setOnTouchListener((view, motionEvent) -> {
             if (binding != null) {
-                binding.createMenu.collapse();
+                binding.createMenu.setExpanded(false);
             }
             return false;
         });
-        binding.tunnelList.setOnScrollListener(new FloatingActionsMenuRecyclerViewScrollListener(binding.createMenu));
+        binding.createMenu.setOnClickListener(v -> {
+            binding.createMenu.setExpanded(binding.createMenu.isExpanded());
+        });
+        // binding.tunnelList.setOnScrollListener(new FloatingActionsMenuRecyclerViewScrollListener(binding.createMenu));
         binding.executePendingBindings();
         return binding.getRoot();
     }
@@ -246,7 +248,7 @@ public class TunnelListFragment extends BaseFragment {
     @Override
     public void onPause() {
         if (binding != null) {
-            binding.createMenu.collapse();
+            binding.createMenu.setExpanded(false);
         }
         super.onPause();
     }
@@ -254,7 +256,7 @@ public class TunnelListFragment extends BaseFragment {
     public void onRequestCreateConfig(@SuppressWarnings("unused") final View view) {
         startActivity(new Intent(getActivity(), TunnelCreatorActivity.class));
         if (binding != null)
-            binding.createMenu.collapse();
+            binding.createMenu.setExpanded(false);
     }
 
     public void onRequestImportConfig(@SuppressWarnings("unused") final View view) {
@@ -263,7 +265,7 @@ public class TunnelListFragment extends BaseFragment {
         intent.setType("*/*");
         startActivityForResult(intent, REQUEST_IMPORT);
         if (binding != null)
-            binding.createMenu.collapse();
+            binding.createMenu.setExpanded(false);
     }
 
     public void onRequestScanQRCode(@SuppressWarnings("unused") final View view) {
@@ -274,7 +276,7 @@ public class TunnelListFragment extends BaseFragment {
         intentIntegrator.initiateScan(Collections.singletonList(IntentIntegrator.QR_CODE));
 
         if (binding != null)
-            binding.createMenu.collapse();
+            binding.createMenu.setExpanded(false);
     }
 
     @Override
