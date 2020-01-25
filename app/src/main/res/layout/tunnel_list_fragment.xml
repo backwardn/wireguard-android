@@ -79,9 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{fragment::onRequestImportConfig}"
-                android:layout_marginBottom="@dimen/fab_actions_spacing"
+                android:layout_marginBottom="@dimen/fab_margin"
                 app:fabSize="mini"
-                app:fab_title="@string/create_from_file"
                 app:srcCompat="@drawable/ic_action_open_white" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -89,9 +88,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{fragment::onRequestScanQRCode}"
-                android:layout_marginBottom="@dimen/fab_actions_spacing"
+                android:layout_marginBottom="@dimen/fab_margin"
                 app:fabSize="mini"
-                app:fab_title="@string/create_from_qr_code"
                 app:srcCompat="@drawable/ic_action_scan_qr_code_white" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -99,9 +97,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{fragment::onRequestCreateConfig}"
-                android:layout_marginBottom="@dimen/fab_actions_spacing"
+                android:layout_marginBottom="@dimen/fab_margin"
                 app:fabSize="mini"
-                app:fab_title="@string/create_empty"
                 app:srcCompat="@drawable/ic_action_edit_white" />
         </LinearLayout>
 
