@@ -232,7 +232,7 @@ public class TunnelListFragment extends BaseFragment {
             return false;
         });
         binding.createMenu.setOnClickListener(v -> {
-            binding.createMenu.setExpanded(binding.createMenu.isExpanded());
+            binding.createMenu.setExpanded(!binding.createMenu.isExpanded());
         });
         // binding.tunnelList.setOnScrollListener(new FloatingActionsMenuRecyclerViewScrollListener(binding.createMenu));
         binding.executePendingBindings();
