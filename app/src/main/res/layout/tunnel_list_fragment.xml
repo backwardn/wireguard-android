@@ -74,7 +74,7 @@
             app:layout_anchor="@id/create_menu"
             app:layout_anchorGravity="top|center_horizontal"
             app:layout_behavior="com.wireguard.android.widget.fab.EmitExpandableTransformationBehavior">
-            <com.wireguard.android.widget.fab.LabeledFloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/create_from_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                 app:fab_title="@string/create_from_file"
                 app:srcCompat="@drawable/ic_action_open_white" />
 
-            <com.wireguard.android.widget.fab.LabeledFloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/create_from_qrcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 app:fab_title="@string/create_from_qr_code"
                 app:srcCompat="@drawable/ic_action_scan_qr_code_white" />
 
-            <com.wireguard.android.widget.fab.LabeledFloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/create_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
