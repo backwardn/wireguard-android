@@ -65,8 +65,8 @@
 
         <LinearLayout
             android:id="@+id/create_options"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
@@ -74,29 +74,32 @@
             app:layout_anchor="@id/create_menu"
             app:layout_anchorGravity="top|center_horizontal"
             app:layout_behavior="com.google.android.material.transformation.FabTransformationScrimBehavior">
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.wireguard.android.widget.fab.LabeledFloatingActionButton
                 android:id="@+id/create_from_file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{fragment::onRequestImportConfig}"
+                android:layout_marginBottom="@dimen/fab_actions_spacing"
                 app:fabSize="mini"
                 app:fab_title="@string/create_from_file"
                 app:srcCompat="@drawable/ic_action_open_white" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.wireguard.android.widget.fab.LabeledFloatingActionButton
                 android:id="@+id/create_from_qrcode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{fragment::onRequestScanQRCode}"
+                android:layout_marginBottom="@dimen/fab_actions_spacing"
                 app:fabSize="mini"
                 app:fab_title="@string/create_from_qr_code"
                 app:srcCompat="@drawable/ic_action_scan_qr_code_white" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <com.wireguard.android.widget.fab.LabeledFloatingActionButton
                 android:id="@+id/create_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{fragment::onRequestCreateConfig}"
+                android:layout_marginBottom="@dimen/fab_actions_spacing"
                 app:fabSize="mini"
                 app:fab_title="@string/create_empty"
                 app:srcCompat="@drawable/ic_action_edit_white" />
