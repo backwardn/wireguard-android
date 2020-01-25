@@ -3,7 +3,10 @@ package com.wireguard.android.widget.fab;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transformation.ExpandableTransformationBehavior;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +30,18 @@ public class EmitExpandableTransformationBehavior extends ExpandableTransformati
     private static final long COLLAPSE_DELAY = 60L;
     private static final long COLLAPSE_DURATION = 150L;
 
+    public EmitExpandableTransformationBehavior() {
+        super(null, null);
+    }
+
+    public EmitExpandableTransformationBehavior(final Context context) {
+        super(context, null);
+    }
+
+    public EmitExpandableTransformationBehavior(final Context context, final AttributeSet attributeSet) {
+        super(context, attributeSet);
+    }
+
     @Override
     public boolean layoutDependsOn(final CoordinatorLayout parent, final View child, final View dependency) {
         return dependency instanceof FloatingActionButton && child instanceof ViewGroup;
@@ -37,7 +53,7 @@ public class EmitExpandableTransformationBehavior extends ExpandableTransformati
         if (!(child instanceof ViewGroup)) {
             return new AnimatorSet();
         }
-        final ArrayList<Animator> animations = new ArrayList<>();
+        final Collection<Animator> animations = new ArrayList<>();
         if (expanded) {
             createExpandAnimation((ViewGroup) child, isAnimating, animations);
         } else {
@@ -49,7 +65,11 @@ public class EmitExpandableTransformationBehavior extends ExpandableTransformati
         return set;
     }
 
-    private static void createExpandAnimation(final ViewGroup child, final boolean currentlyAnimating, final ArrayList<Animator> animations) {
+    private static void createExpandAnimation(
+            final ViewGroup child,
+            final boolean currentlyAnimating,
+            final Collection<Animator> animations
+    ) {
         if (!currentlyAnimating) {
             for (int i = 0; i < child.getChildCount(); i++) {
                 final View view = child.getChildAt(i);
@@ -66,7 +86,48 @@ public class EmitExpandableTransformationBehavior extends ExpandableTransformati
         final PropertyValuesHolder scaleXHolder = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f);
         final PropertyValuesHolder scaleYHolder = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f);
         final PropertyValuesHolder alphaHolder = PropertyValuesHolder.ofFloat(View.ALPHA, 1f);
+        final Collection<Animator> animators = new ArrayList<>();
+        for (int i = 0; i < child.getChildCount(); i++) {
+            final View view = child.getChildAt(i);
+            final ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(
+                    view,
+                    scaleXHolder,
+                    scaleYHolder,
+                    alphaHolder
+            );
+            animator.setDuration(EXPAND_DURATION);
+            animator.setStartDelay(delays[i]);
+            animators.add(animator);
+        }
+        final AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animators);
+        animations.add(animatorSet);
+    }
 
+    private static void createCollapseAnimation(final ViewGroup child, final Collection<Animator> animations) {
+        final long[] delays = new long[child.getChildCount()];
+        for (int i = 0; i < child.getChildCount(); i++) {
+            delays[i] = i * COLLAPSE_DELAY;
+        }
+        final PropertyValuesHolder scaleXHolder = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.4f);
+        final PropertyValuesHolder scaleYHolder = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.4f);
+        final PropertyValuesHolder alphaHolder = PropertyValuesHolder.ofFloat(View.ALPHA, 0f);
+        final Collection<Animator> animators = new ArrayList<>();
+        for (int i = 0; i < child.getChildCount(); i++) {
+            final View view = child.getChildAt(i);
+            final ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(
+                    view,
+                    scaleXHolder,
+                    scaleYHolder,
+                    alphaHolder
+            );
+            animator.setDuration(COLLAPSE_DURATION);
+            animator.setStartDelay(delays[i]);
+            animators.add(animator);
+        }
+        final AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animators);
+        animations.add(animatorSet);
     }
 
     private static long[] reverse(final long[] array, final int size) {

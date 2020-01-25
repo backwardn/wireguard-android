@@ -73,7 +73,7 @@
             android:visibility="invisible"
             app:layout_anchor="@id/create_menu"
             app:layout_anchorGravity="top|center_horizontal"
-            app:layout_behavior="com.google.android.material.transformation.FabTransformationScrimBehavior">
+            app:layout_behavior="com.wireguard.android.widget.fab.EmitExpandableTransformationBehavior">
             <com.wireguard.android.widget.fab.LabeledFloatingActionButton
                 android:id="@+id/create_from_file"
                 android:layout_width="wrap_content"
