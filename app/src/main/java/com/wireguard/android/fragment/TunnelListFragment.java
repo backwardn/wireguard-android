@@ -73,10 +73,7 @@ public class TunnelListFragment extends BaseFragment {
     @Nullable private TunnelListFragmentBinding binding;
 
     public boolean collapseActionMenu() {
-        if (binding != null && binding.createMenu.isExpanded()) {
-            return true;
-        }
-        return false;
+        return binding != null && binding.createMenu.isExpanded();
     }
 
     private void importTunnel(@NonNull final String configText) {
@@ -217,7 +214,6 @@ public class TunnelListFragment extends BaseFragment {
         }
     }
 
-    //@SuppressWarnings("deprecation")
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container,
@@ -232,9 +228,11 @@ public class TunnelListFragment extends BaseFragment {
             return false;
         });
         binding.createMenu.setOnClickListener(v -> {
-            binding.createMenu.setExpanded(!binding.createMenu.isExpanded());
+            final boolean expanded = binding.createMenu.isExpanded();
+            final float rotation = expanded ? -45 : 45;
+            binding.createMenu.setExpanded(!expanded);
+            binding.createMenu.animate().rotationBy(rotation).setDuration(100).start();
         });
-        // binding.tunnelList.setOnScrollListener(new FloatingActionsMenuRecyclerViewScrollListener(binding.createMenu));
         binding.executePendingBindings();
         return binding.getRoot();
     }
