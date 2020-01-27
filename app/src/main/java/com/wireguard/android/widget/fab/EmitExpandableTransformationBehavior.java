@@ -18,9 +18,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+@Keep
 public class EmitExpandableTransformationBehavior extends ExpandableTransformationBehavior {
 
     private static final float EXPAND_SCALE_X = 0.4f;
