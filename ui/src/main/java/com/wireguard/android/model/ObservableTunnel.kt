@@ -24,8 +24,7 @@ class ObservableTunnel internal constructor(
         config: Config?,
         state: Tunnel.State
 ) : BaseObservable(), Keyed<String>, Tunnel {
-    override fun getKey() = name
-
+    override val key = name
 
     @Bindable
     override fun getName() = name
